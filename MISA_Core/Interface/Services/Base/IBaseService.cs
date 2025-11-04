@@ -6,12 +6,31 @@ using System.Threading.Tasks;
 
 namespace MISA_Core.Interface.Services.Base
 {
-    public interface IBaseService<T>
+    public interface IBaseService<T> where T : class
     {
-        IEnumerable<T>? GetAll();
-        T? GetById(Guid id);
-        T Insert(T entity);
-        T Update(Guid id, T entity);
-        Guid DeleteById(Guid id);
+        /// <summary>
+        /// Lấy tất cả bản ghi
+        /// </summary>
+        Task<IEnumerable<T>?> GetAll();
+
+        /// <summary>
+        /// Lấy bản ghi theo Id
+        /// </summary>
+        Task<T?> GetById(Guid id);
+
+        /// <summary>
+        /// Thêm mới bản ghi
+        /// </summary>
+        Task<T> Insert(T entity);
+
+        /// <summary>
+        /// Cập nhật bản ghi
+        /// </summary>
+        Task<T> Update(Guid id, T entity);
+
+        /// <summary>
+        /// Xóa bản ghi theo Id
+        /// </summary>
+        Task<Guid> DeleteById(Guid id);
     }
 }
