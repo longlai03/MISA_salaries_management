@@ -1,4 +1,5 @@
-﻿using MISA_Core.Entities;
+﻿using MISA_Core.Dtos.Response;
+using MISA_Core.Entities;
 using MISA_Core.Interface.Repositories.Base;
 using System;
 using System.Collections.Generic;
@@ -17,15 +18,15 @@ namespace MISA_Core.Interface.Repositories
         /// <param name="limit">Số lượng bản ghi tối đa trong một trang</param>
         /// <param name="page">Số trang hiện tại</param>
         /// <returns>Danh sách thành phần lương thỏa mãn điều kiện</returns>
-        Task<IEnumerable<SalariesComposition>?> GetAllWithFilter(string? search, int limit, int page);
+        Task<PageDataResponse<SalariesComposition>?> GetAllWithFilter(string? search, int limit, int page, int statusIndex);
         /// <summary>
         /// Kiểm tra mã thành phần lương đã tồn tại trong hệ thống hay chưa
         /// </summary>
         /// <param name="code">Mã thành phần lương cần kiểm tra</param>
         /// <returns>True nếu mã đã tồn tại, ngược lại False</returns>
         Task<bool> CheckComponentCodeExist(string code);
-        Task<bool> ChangeSalaryStatus(List<Guid> ids, bool status);
+        Task<bool> ChangeSalaryStatus(List<Guid> ids, int status);
         Task<bool> DeleteByIds(List<Guid> ids);
-
+        Task<bool> InsertMany(List<SalariesComposition> salariesCompositions);
     }
 }

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace MISA_Core.Dtos.Request
 {
-    public class SalariesCompositionDeleteRequest
+    public class SalariesCompositionSystemIdsRequest
     {
-        public required List<Guid> SalaryCompositionIds { get; set; }
+        public required List<Guid> SalaryCompositionSystemIds { get; set; }
+
     }
 }

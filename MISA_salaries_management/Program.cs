@@ -5,7 +5,6 @@ using MISA_Core.Entities;
 using MISA_Core.Interface.Repositories;
 using MISA_Core.Interface.Repositories.Base;
 using MISA_Core.Interface.Services;
-using MISA_Core.Interface.Services.Base;
 using MISA_Core.Services;
 using MISA_Core.Validator;
 using MISA_Infrastructure.Repositories;
@@ -34,22 +33,16 @@ builder.Services.AddCors(options =>
 //Dependency Injection
 builder.Services.AddScoped<IBaseRepository<Organization>, OrganizationRepository>();
 builder.Services.AddScoped<IOrganizationRepo, OrganizationRepository>();
-//builder.Services.AddScoped<IBaseService<Organization>, OrganizationService>();
 //builder.Services.AddScoped<IOrganizationService, OrganizationService>();
 
 builder.Services.AddScoped<IBaseRepository<SalariesComposition>, SalariesCompositionRepository>();
 builder.Services.AddScoped<ISalariesCompositionRepo, SalariesCompositionRepository>();
-builder.Services.AddScoped<IBaseService<SalariesComposition>, SalariesCompositionService>();
 builder.Services.AddScoped<ISalariesCompositionService, SalariesCompositionService>();
 
 
 builder.Services.AddScoped<IBaseRepository<SalariesCompositionSystem>, SalariesCompositionSystemRepository>();
 builder.Services.AddScoped<ISalariesCompositionSystemRepo, SalariesCompositionSystemRepository>();
-builder.Services.AddScoped<IBaseService<SalariesCompositionSystem>, SalariesCompositionSystemService>();
 builder.Services.AddScoped<ISalariesCompositionSystemService, SalariesCompositionSystemService>();
-
-builder.Services.AddScoped<IValidator<SalariesComposition>, SalariesCompositionValidator>();
-
 
 var app = builder.Build();
 app.UseCors("AllowOrigins");

@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using MISA_Core.Entities;
+﻿using MISA_Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MISA_Core.Validator
 {
-    public class SalariesCompositionValidator
+    public class SalariesCompositionSystemValidator
     {
-        public Dictionary<string, string> Validate(SalariesComposition entity)
+        public Dictionary<string, string> Validate(SalariesCompositionSystem entity)
         {
             var errors = new Dictionary<string, string>();
 

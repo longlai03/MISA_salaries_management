@@ -1,6 +1,5 @@
 ﻿using MISA_Core.Entities;
 using MISA_Core.Interface.Services;
-using MISA_Core.Interface.Services.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MISA_Core.Services
 {
-    public class OrganizationService : IBaseService<Organization>, IOrganizationService
+    public class OrganizationService : IOrganizationService
     {
         public Task<Guid> DeleteById(Guid id)
         {

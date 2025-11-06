@@ -1,20 +1,17 @@
-﻿using MISA_Core.MISAAttribute;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MISA.Core.MISAAttribute;
+using MISA_Core.MISAAttribute;
 
 namespace MISA_Core.Entities
 {
     /// <summary>
     /// Bảng thành phần lương hệ thống
     /// </summary>
+    [MISATableName("pa_salary_composition_system")]
     public class SalariesCompositionSystem
     {
         //PK
         [MISAColumnName("salary_composition_system_id")]
-        public Guid? SalaryCompositionSystemId { get; set; }
+        public Guid SalaryCompositionSystemId { get; set; }
 
         //Mã thành phần lương
         [MISAColumnName("component_code")]
@@ -94,11 +91,11 @@ namespace MISA_Core.Entities
 
         //Nguồn tạo
         [MISAColumnName("create_source")]
-        public int? CreateSource { get; set; }
+        public int CreateSource { get; set; }
 
         //Trạng thái
         [MISAColumnName("status")]
-        public bool Status { get; set; }
+        public int Status { get; set; }
 
         //Ngày tạo
         [MISAColumnName("create_at")]

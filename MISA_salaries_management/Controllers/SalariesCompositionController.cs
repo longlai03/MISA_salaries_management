@@ -26,10 +26,10 @@ namespace MISA_salaries_management.Controllers
         /// <returns>Danh sách thành phần lương thỏa mãn điều kiện</returns>
         // GET: api/salaries-composition
         [HttpGet]
-        public async Task<object?> GetSalaryCompositionByFilter([FromQuery] string search = "", [FromQuery] int limit = 10, [FromQuery] int page = 1)
+        public async Task<object?> GetSalaryCompositionByFilter([FromQuery] string search = "", [FromQuery] int limit = 15, [FromQuery] int page = 1, [FromQuery] int statusIndex = -1)
         {
 
-            var getSalary = await _salariesCompositionService.GetAllWithFilter(search, limit, page);
+            var getSalary = await _salariesCompositionService.GetAllWithFilter(search, limit, page, statusIndex);
             return getSalary;
         }
 
@@ -93,23 +93,10 @@ namespace MISA_salaries_management.Controllers
         /// <returns>Kết quả xóa bản ghi thành công</returns>
         // DELETE: api/salaries-composition/{id}
         [HttpDelete("delete-bulk")]
-        public async Task<object> DeleteSalaryCompositionByIds([FromBody] SalariesCompositionDeleteRequest request)
+        public async Task<object> DeleteSalaryCompositionByIds([FromBody] SalariesCompositionIdsRequest request)
         {
             var deletedSalary = await _salariesCompositionService.DeleteByIds(request.SalaryCompositionIds);
             return deletedSalary;
-        }
-
-        /// <summary>
-        /// Kiểm tra mã thành phần lương đã tồn tại trong hệ thống hay chưa
-        /// </summary>
-        /// <param name="code">Mã thành phần lương cần kiểm tra</param>
-        /// <returns>True nếu mã đã tồn tại, ngược lại False</returns>
-        // GET: api/salaries-composition/check-code
-        [HttpGet("check-code")]
-        public async Task<object> CheckComponentCodeExist([FromQuery] string code)
-        {
-            var isExist = await _salariesCompositionService.CheckComponentCodeExist(code);
-            return isExist;
         }
 
         /// <summary>

@@ -34,9 +34,12 @@ namespace MISA.Infrastructure.Repositories
             var tableName = GetTableName();
             var sql = $"SELECT * FROM {tableName}";
 
-            using var connection = new MySqlConnection(_connectionString);
-            var result = await connection.QueryAsync<T>(sql);
-            return result.ToList();
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var result = await connection.QueryAsync<T>(sql);
+                return result.ToList();
+            }
         }
         /// <summary>
         /// Lấy bản ghi theo ID
@@ -47,10 +50,13 @@ namespace MISA.Infrastructure.Repositories
         {
             var tableName = GetTableName();
             var keyColumn = GetKeyColumn();
-
             var sql = $"SELECT * FROM {tableName} WHERE {keyColumn} = @Id";
-            using var connection = new MySqlConnection(_connectionString);
-            return await connection.QueryFirstOrDefaultAsync<T>(sql, new { Id = id });
+
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                return await connection.QueryFirstOrDefaultAsync<T>(sql, new { Id = id });
+            }
         }
         /// <summary>
         /// Thêm mới một bản ghi vào cơ sở dữ liệu
@@ -64,12 +70,14 @@ namespace MISA.Infrastructure.Repositories
 
             var columnNames = string.Join(", ", props.Select(p => p.ColumnName));
             var paramNames = string.Join(", ", props.Select(p => "@" + p.Property.Name));
-
             var sql = $"INSERT INTO {tableName} ({columnNames}) VALUES ({paramNames})";
 
-            using var connection = new MySqlConnection(_connectionString);
-            await connection.ExecuteAsync(sql, entity);
-            return entity;
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                await connection.ExecuteAsync(sql, entity);
+                return entity;
+            }
         }
         /// <summary>
         /// Cập nhật dữ liệu bản ghi theo ID
@@ -84,20 +92,22 @@ namespace MISA.Infrastructure.Repositories
             var keyColumn = GetKeyColumn();
 
             var props = GetColumnMappings().Where(p => p.ColumnName != keyColumn);
-
             var setClause = string.Join(", ", props.Select(p => $"{p.ColumnName} = @{p.Property.Name}"));
             var sql = $"UPDATE {tableName} SET {setClause} WHERE {keyColumn} = @Id";
 
             var parameters = new DynamicParameters(entity);
             parameters.Add("Id", id);
 
-            using var connection = new MySqlConnection(_connectionString);
-            var affected = await connection.ExecuteAsync(sql, parameters);
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var affected = await connection.ExecuteAsync(sql, parameters);
 
-            if (affected == 0)
-                throw new ValidateException($"Không tìm thấy bản ghi có ID = {id}");
+                if (affected == 0)
+                    throw new ValidateException($"Không tìm thấy bản ghi có ID = {id}");
 
-            return entity;
+                return entity;
+            }
         }
         /// <summary>
         /// Xóa bản ghi theo ID
@@ -111,13 +121,16 @@ namespace MISA.Infrastructure.Repositories
             var keyColumn = GetKeyColumn();
             var sql = $"DELETE FROM {tableName} WHERE {keyColumn} = @Id";
 
-            using var connection = new MySqlConnection(_connectionString);
-            var affected = await connection.ExecuteAsync(sql, new { Id = id });
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var affected = await connection.ExecuteAsync(sql, new { Id = id });
 
-            if (affected == 0)
-                throw new ValidateException($"Không tìm thấy bản ghi có ID = {id}");
+                if (affected == 0)
+                    throw new ValidateException($"Không tìm thấy bản ghi có ID = {id}");
 
-            return id;
+                return id;
+            }
         }
         /// <summary>
         /// Lấy tên bảng từ attribute [MISATableName] gắn trên entity

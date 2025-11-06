@@ -17,7 +17,7 @@ namespace MISA_Core.Entities
     {
         //PK
         [MISAColumnName("salary_composition_id")]
-        public Guid? SalaryCompositionId { get; set; }
+        public Guid SalaryCompositionId { get; set; }
 
         //Mã thành phần lương
         [MISAColumnName("component_code")]
@@ -97,11 +97,11 @@ namespace MISA_Core.Entities
 
         //Nguồn tạo
         [MISAColumnName("create_source")]
-        public int? CreateSource { get; set; }
+        public int CreateSource { get; set; }
 
         //Trạng thái
         [MISAColumnName("status")]
-        public bool Status { get; set; }
+        public int Status { get; set; }
 
         //Ngày tạo
         [MISAColumnName("create_at")]
