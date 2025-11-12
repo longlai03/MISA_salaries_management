@@ -62,9 +62,9 @@ namespace MISA_Infrastructure.Repositories
             parameters.Add("@Limit", limit);
             parameters.Add("@Offset", (page - 1) * limit);
 
-            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            using (var connection = new MySqlConnection(_connectionString))
             {
-                //await connection.OpenAsync();
+                await connection.OpenAsync();
 
                 // Lấy dữ liệu
                 var data = await connection.QueryAsync<SalariesCompositionSystem>(sqlData, parameters);
